@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../../models/UserModel');
 const bcrypt = require('bcryptjs');
 const generateToken = require('../../utils/generateToken');
+const validateToken = require('../../middleware/auth');
 
 //@desc REGISTER USER
 //@route POST/api/users
@@ -36,10 +37,11 @@ router.post('/', async (req, res) => {
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username });
+  let token = await generateToken(user._id);
   if (user && (await bcrypt.compare(password, user.password))) {
     res.status(200).json({
       message: `Logged in as ${user.username}`,
-      token: generateToken(user._id),
+      token: token,
     });
   } else {
     res.status(400).json({ message: 'Invalid Credentials' });
@@ -52,8 +54,11 @@ router.post('/login', async (req, res) => {
 
 router.get('/:username', async (req, res) => {
   const { username } = req.params;
-  const user = await User.findOne({ username }).select('-password -__v');
-  res.status(200).json({ UserProfile: user });
+  const validated = await validateToken(req, res);
+  if (validated) {
+    const user = await User.findOne({ username }).select('-password -__v');
+    res.status(200).json({ UserProfile: user });
+  }
 });
 
 module.exports = router;
