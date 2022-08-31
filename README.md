@@ -1,8 +1,10 @@
 # JWT & Bcypt Practice
 
-- **JWT or JSON Web Token**, is used for **authentication** in **REST API**.
-  More information about JWT can be found on [jwt.io](https://jwt.io/)
-- **Bcrypt or BcryptJS**, is used for hashing sensitive credentials such as passwords when we want to store them. More information on Bcrypt can be found on [bcryptjs](https://www.npmjs.com/package/bcryptjs)
+**JWT or JSON Web Token**, is used for **authentication** in **REST API**.
+More information about JWT can be found on [jwt.io](https://jwt.io/)
+
+**Bcrypt or BcryptJS**, is used for hashing sensitive credentials such as passwords when we want to store them.
+More information on Bcrypt can be found on [bcryptjs](https://www.npmjs.com/package/bcryptjs)
 
 ## JWT Structure
 
